@@ -1,29 +1,38 @@
 import { useState } from "react";
 import "./App.css";
+import arrowRightIcon from "./assets/images/icon-arrow-right.svg";
 import copyIcon from "./assets/images/icon-copy.svg";
 import Option from "./components/generationOption";
+import PasswordStrength from "./components/passwordStrength";
 
 function App() {
   const [sliderValue, setSliderValue] = useState<number>(0);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [options, setOptions] = useState<any>({
+    uppercase: false,
+    lowercase: false,
+    numbers: false,
+    symbols: false,
+  });
 
   return (
     <div className='font-JetBrains text-aWhite'>
-      <div className='flex flex-col gap-4 px-4 py-16'>
-        <div className='flex justify-center text-grey'>
-          <p className='text-base'>Password Generator</p>
+      <div className='flex flex-col gap-4 md:gap-6 px-4 md:px-[7.125rem] py-16 md:pt-[8.3125rem]'>
+        <div className='flex justify-center text-grey md:mb-[0.4375rem]'>
+          <p className='text-base md:text-2xl'>Password Generator</p>
         </div>
-        <div className='flex justify-between items-center px-4 bg-darkGrey h-16'>
-          <p className='headingM'>PTx1f5DaFX</p>
-          <img src={copyIcon} className='h-5' alt='Copy password' />
+        <div className='flex justify-between items-center px-4 md:px-8 py-4 md md:py-[1.1875rem] bg-darkGrey'>
+          <p className='headingM headingL'>PTx1f5DaFX</p>
+          <img src={copyIcon} className='h-5 md:h-6' alt='Copy password' />
         </div>
-        <div className='bg-darkGrey p-4'>
+        <div className='bg-darkGrey p-4 md:px-8 md:pt-6 md:pb-8'>
           <div className='flex flex-col gap-8'>
-            <div className='flex flex-col gap-2'>
+            <div className='flex flex-col gap-2 md:gap-4'>
               <div className='flex items-center justify-between'>
-                <p className='text-base'>Character Length</p>
-                <p className='headingM text-neonGreen'>{sliderValue}</p>
+                <p className='text-base bodyM'>Character Length</p>
+                <p className='headingM text-neonGreen headingL'>{sliderValue}</p>
               </div>
-              <div className='relative w-full'>
+              <div className='relative w-full h-7'>
                 <input
                   step={1}
                   min={0}
@@ -40,11 +49,40 @@ function App() {
                 />
               </div>
             </div>
-            <div>
-              <Option id={"uppercase"} text={"Include Uppercase Letters"} />
-              <Option id={"lowercase"} text={"Include Lowercase Letters"} />
-              <Option id={"numbers"} text={"Include Numbers"} />
-              <Option id={"symbols"} text={"Include Symbols"} />
+            <div className='flex flex-col gap-4 md:gap-5'>
+              <Option
+                id={"uppercase"}
+                text={"Include Uppercase Letters"}
+                toggled={options}
+                value={options.uppercase}
+                toggleOption={setOptions}
+              />
+              <Option
+                id={"lowercase"}
+                text={"Include Lowercase Letters"}
+                toggled={options}
+                value={options.lowercase}
+                toggleOption={setOptions}
+              />
+              <Option
+                id={"numbers"}
+                text={"Include Numbers"}
+                toggled={options}
+                value={options.numbers}
+                toggleOption={setOptions}
+              />
+              <Option
+                id={"symbols"}
+                text={"Include Symbols"}
+                toggled={options}
+                value={options.symbols}
+                toggleOption={setOptions}
+              />
+            </div>
+            <PasswordStrength passwordStrength={0} />
+            <div className='flex py-4 md:py-[1.3125rem] gap-3 items-center justify-center bg-neonGreen'>
+              <p className='text-base text-darkGrey bodyM'>GENERATE</p>
+              <img src={arrowRightIcon} className='h-3' />
             </div>
           </div>
         </div>
