@@ -12,7 +12,7 @@ export default function PasswordStrength({ passwordStrength }: propsType) {
       <StrengthBar key={i} achieved={i >= passwordStrength} strength={passwordStrength} />
     ));
   return (
-    <div className='flex px-4 md:px-8 py-[0.875rem] md:py-5 md:pt-[1.3125rem] justify-between items-center bg-vDarkGrey'>
+    <div className='flex px-4 md:px-8 py-[0.875rem] md:py-[1.28125rem] justify-between items-center bg-vDarkGrey'>
       <p className='text-base text-grey bodyM'>STRENGTH</p>
       <div className='flex items-center gap-4'>
         <p className='bodyM md:text-[1.5rem] md:leading-[1.9375rem]'>
