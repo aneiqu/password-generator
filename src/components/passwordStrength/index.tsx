@@ -5,7 +5,6 @@ type propsType = {
 };
 
 export default function PasswordStrength({ passwordStrength }: propsType) {
-  console.log(passwordStrength);
   const strength = ["TOO WEAK!", "WEAK", "MEDIUM", "STRONG"];
   const strengthBars = new Array(4)
     .fill("")

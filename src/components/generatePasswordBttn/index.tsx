@@ -6,7 +6,7 @@ export default function GeneratePasswordButton({ handleGenerate }: propsType) {
   return (
     <div
       onClick={handleGenerate}
-      className='flex py-4 md:py-[1.3125rem] gap-3 items-center justify-center bg-neonGreen group hover:outline hover:outline-neonGreen hover:bg-darkGrey '
+      className='flex py-4 md:py-[1.3125rem] gap-3 md:gap-6 items-center justify-center bg-neonGreen group hover:outline hover:outline-neonGreen hover:bg-darkGrey '
     >
       <p className='text-base text-darkGrey bodyM group-hover: group-hover:text-neonGreen'>
         GENERATE

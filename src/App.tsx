@@ -59,22 +59,22 @@ function App() {
     <div className='font-JetBrains text-aWhite'>
       <div className='flex flex-col gap-4 md:gap-6 px-4 md:px-0 py-16 md:pt-[8.3125rem]  mx-auto md:max-w-[33.75rem]'>
         <div className='flex justify-center text-grey md:mb-[0.4375rem]'>
-          <p className='text-base md:text-2xl'>Password Generator</p>
+          <p className='text-base headingM md:text-2xl'>Password Generator</p>
         </div>
         <div className='flex justify-between items-center px-4 md:px-8 py-4 md md:py-[1.1875rem] bg-darkGrey'>
           <input
             disabled
-            className='headingM headingL bg-transparent placeholder-aWhite placeholder-opacity-25'
+            className='headingM headingL bg-transparent placeholder-aWhite placeholder-opacity-25 w-1/2'
             placeholder='P4$5W0rD!'
             value={password}
           ></input>
-          <div className='relative'>
+          <div className='relative w-10 flex justify-end'>
             <p
               className={`absolute right-0 mr-8 text-neonGreen duration-300 opacity-${copiedOpacity}`}
             >
               COPIED
             </p>
-            <img onClick={handleCopy} src={copyIcon} className='h-5 md:h-6 ' alt='Copy password' />
+            <img onClick={handleCopy} src={copyIcon} className='' alt='Copy password' />
           </div>
         </div>
         <div className='bg-darkGrey p-4 md:px-8 md:pt-6 md:pb-8'>
