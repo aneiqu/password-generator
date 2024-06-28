@@ -10,7 +10,7 @@ type propsType = {
 };
 export default function Option({ id, text, toggled, value, toggleOption }: propsType) {
   return (
-    <div className='flex relative items-center gap-5'>
+    <div className='option flex relative items-center gap-5'>
       <input
         id={id}
         type='checkbox'

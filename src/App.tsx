@@ -1,13 +1,18 @@
-import { useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
 import "./App.css";
-import arrowRightIcon from "./assets/images/icon-arrow-right.svg";
 import copyIcon from "./assets/images/icon-copy.svg";
+import GeneratePasswordButton from "./components/generatePassword";
 import Option from "./components/generationOption";
+import LengthSlider from "./components/passwordLengthSlider";
 import PasswordStrength from "./components/passwordStrength";
+import GeneratePassword from "./services/passwordGenerator";
 
 function App() {
   const [sliderValue, setSliderValue] = useState<number>(0);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [passwordStrength, setPasswordStrength] = useState<number>(2);
+  const [password, setPassword] = useState<any>("");
+  const [copiedOpacity, setCopiedOpacity] = useState<number>(0);
   const [options, setOptions] = useState<any>({
     uppercase: false,
     lowercase: false,
@@ -15,15 +20,60 @@ function App() {
     symbols: false,
   });
 
+  useEffect(() => {
+    setPasswordStrength(
+      sliderValue <= 6
+        ? 1
+        : sliderValue > 6 && sliderValue < 9
+        ? 2
+        : sliderValue > 8 && sliderValue <= 11
+        ? 3
+        : 4
+    );
+  }, [sliderValue]);
+
+  const handleCopy = () => {
+    if (password.length <= 0) return;
+    setCopiedOpacity(100);
+    navigator.clipboard.writeText(password);
+    setTimeout(() => {
+      setCopiedOpacity(0);
+    }, 500);
+  };
+  const handleGenerate = () => {
+    if (sliderValue < 1 || !Object.values(options).some((el) => el)) return;
+    setPassword(
+      GeneratePassword({
+        length: sliderValue,
+        includeUpper: options.uppercase,
+        includeLower: options.lowercase,
+        includeNumbers: options.numbers,
+        includeSymbols: options.symbols,
+      })
+    );
+  };
+
   return (
     <div className='font-JetBrains text-aWhite'>
-      <div className='flex flex-col gap-4 md:gap-6 px-4 md:px-[7.125rem] py-16 md:pt-[8.3125rem]'>
+      <div className='flex flex-col gap-4 md:gap-6 px-4 md:px-0 py-16 md:pt-[8.3125rem]  mx-auto md:max-w-[33.75rem]'>
         <div className='flex justify-center text-grey md:mb-[0.4375rem]'>
           <p className='text-base md:text-2xl'>Password Generator</p>
         </div>
         <div className='flex justify-between items-center px-4 md:px-8 py-4 md md:py-[1.1875rem] bg-darkGrey'>
-          <p className='headingM headingL'>PTx1f5DaFX</p>
-          <img src={copyIcon} className='h-5 md:h-6' alt='Copy password' />
+          <input
+            disabled
+            className='headingM headingL bg-transparent'
+            placeholder='P4$5W0rD!'
+            value={password}
+          ></input>
+          <div className='relative'>
+            <p
+              className={`absolute right-0 mr-8 text-neonGreen duration-300 opacity-${copiedOpacity}`}
+            >
+              COPIED
+            </p>
+            <img onClick={handleCopy} src={copyIcon} className='h-5 md:h-6 ' alt='Copy password' />
+          </div>
         </div>
         <div className='bg-darkGrey p-4 md:px-8 md:pt-6 md:pb-8'>
           <div className='flex flex-col gap-8'>
@@ -32,22 +82,7 @@ function App() {
                 <p className='text-base bodyM'>Character Length</p>
                 <p className='headingM text-neonGreen headingL'>{sliderValue}</p>
               </div>
-              <div className='relative w-full h-7'>
-                <input
-                  step={1}
-                  min={0}
-                  max={20}
-                  value={sliderValue}
-                  onChange={(e) => setSliderValue(+e.target.value)}
-                  type='range'
-                  style={{
-                    background: `linear-gradient(to right, #A4FFAF ${
-                      sliderValue * 4.99
-                    }%, #18171F ${sliderValue * 4.99}%)`,
-                  }}
-                  className='w-full h-2 appearance-none [&::-webkit-slider-thumb]:duration-100 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-7 [&::-webkit-slider-thumb]:h-7 [&::-webkit-slider-thumb]:bg-aWhite [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:active:bg-vDarkGrey [&::-webkit-slider-thumb]:active:outline [&::-webkit-slider-thumb]:active:outline-neonGreen'
-                />
-              </div>
+              <LengthSlider sliderValue={sliderValue} setSliderValue={setSliderValue} />
             </div>
             <div className='flex flex-col gap-4 md:gap-5'>
               <Option
@@ -79,11 +114,8 @@ function App() {
                 toggleOption={setOptions}
               />
             </div>
-            <PasswordStrength passwordStrength={0} />
-            <div className='flex py-4 md:py-[1.3125rem] gap-3 items-center justify-center bg-neonGreen'>
-              <p className='text-base text-darkGrey bodyM'>GENERATE</p>
-              <img src={arrowRightIcon} className='h-3' />
-            </div>
+            <PasswordStrength passwordStrength={passwordStrength} />
+            <GeneratePasswordButton handleGenerate={handleGenerate} />
           </div>
         </div>
       </div>
