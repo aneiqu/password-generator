@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import copyIcon from "./assets/images/icon-copy.svg";
-import GeneratePasswordButton from "./components/generatePassword";
+import GeneratePasswordButton from "./components/generatePasswordBttn";
 import Option from "./components/generationOption";
 import LengthSlider from "./components/passwordLengthSlider";
 import PasswordStrength from "./components/passwordStrength";
@@ -64,7 +64,7 @@ function App() {
         <div className='flex justify-between items-center px-4 md:px-8 py-4 md md:py-[1.1875rem] bg-darkGrey'>
           <input
             disabled
-            className='headingM headingL bg-transparent'
+            className='headingM headingL bg-transparent placeholder-aWhite placeholder-opacity-25'
             placeholder='P4$5W0rD!'
             value={password}
           ></input>
