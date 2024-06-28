@@ -10,7 +10,7 @@ import GeneratePassword from "./services/passwordGenerator";
 
 function App() {
   const [sliderValue, setSliderValue] = useState<number>(0);
-  const [passwordStrength, setPasswordStrength] = useState<number>(2);
+  const [passwordStrength, setPasswordStrength] = useState<number>(0);
   const [password, setPassword] = useState<any>("");
   const [copiedOpacity, setCopiedOpacity] = useState<number>(0);
   const [options, setOptions] = useState<any>({
@@ -22,7 +22,9 @@ function App() {
 
   useEffect(() => {
     setPasswordStrength(
-      sliderValue <= 6
+      sliderValue === 0
+        ? 0
+        : sliderValue <= 6
         ? 1
         : sliderValue > 6 && sliderValue < 9
         ? 2
